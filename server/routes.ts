@@ -10,10 +10,10 @@ const contactFormSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
-export async function registerRoutes(
+export function registerRoutes(
   httpServer: Server,
   app: Express
-): Promise<Server> {
+): Server {
   
   app.post("/api/contact", async (req, res) => {
     try {
