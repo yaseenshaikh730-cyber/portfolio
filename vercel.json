@@ -6,10 +6,10 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/dist/index.cjs"
+      "source": "/(.*)",
+      "destination": "/dist/index.cjs"
     }
   ],
   "headers": [
