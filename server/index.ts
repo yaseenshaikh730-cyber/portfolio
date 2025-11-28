@@ -1,10 +1,23 @@
 import express, { type Request, Response, NextFunction } from "express";
+import helmet from "helmet";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 
 const app = express();
 const httpServer = createServer(app);
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+}));
 
 declare module "http" {
   interface IncomingMessage {
@@ -14,13 +27,27 @@ declare module "http" {
 
 app.use(
   express.json({
+    limit: '10mb',
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
   }),
 );
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
+
+// Timeout middleware to prevent long-running requests
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const timeoutMs = 25000; // 25 seconds, under Vercel's 30s limit
+  const timer = setTimeout(() => {
+    if (!res.headersSent) {
+      res.status(504).json({ message: "Request timeout" });
+    }
+  }, timeoutMs);
+
+  res.on('finish', () => clearTimeout(timer));
+  next();
+});
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
