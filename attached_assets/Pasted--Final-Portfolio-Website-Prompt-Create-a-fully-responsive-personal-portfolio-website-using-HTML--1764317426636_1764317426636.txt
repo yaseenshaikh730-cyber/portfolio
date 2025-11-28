@@ -1,0 +1,125 @@
+🚀 Final Portfolio Website Prompt
+
+Create a fully responsive personal portfolio website using HTML, CSS, and JavaScript only (no frameworks). The design should look minimal, modern, premium, and clean — similar to Apple, Notion, and futuristic UI websites. Keep layout balanced with whitespace and use smooth micro-animations.
+
+🏷️ Content Requirements
+Hero Section
+
+Name: Yaseen Shaikh
+
+Subtitle: Game Video Editor | AI Video Creator | Environment Designer
+
+Tagline: “Crafting immersive visuals and digital experiences.”
+
+Two CTA buttons: View Work & Hire Me
+
+Optional animated gradient background, subtle particles, or smooth fade-in animations.
+
+About Section
+
+Short intro paragraph
+
+Professional photo or avatar
+
+Skills list with simple icons:
+
+Unreal Engine, Blender, Adobe Premiere Pro, After Effects, AI Tools, Game Engines, DaVinci Resolve, etc.
+
+Projects Section
+
+Grid layout (responsive: 1 column mobile, 2 tablet, 3 desktop)
+
+Each project card should have:
+
+Image/thumbnail
+
+Title
+
+Brief description
+
+Tools used
+
+Hover effect + button: View Project
+
+Services Section (Optional but preferred)
+
+Clean card layout with:
+
+Video Editing
+
+AI Video Creation
+
+Game Footage & Cine-Editing
+
+Environment Design
+
+Light animations when hovering.
+
+Experience or Timeline Section
+
+Minimal vertical or horizontal timeline
+
+Cards for roles, years, and highlights.
+
+Contact Section
+
+Responsive contact form (HTML + JS validation)
+
+Links to LinkedIn, YouTube, Behance, Instagram, GitHub, ArtStation
+
+Clean icons and hover effects.
+
+Footer
+
+Minimal styling
+
+Text: © 2025 — Yaseen Shaikh. All Rights Reserved.
+
+Social icons
+
+🎨 Design Guidelines
+
+Minimal UI with strong visual hierarchy
+
+Neutral palette: White, Black, Gray + Accent color (Blue, Purple, or Emerald)
+
+Typography: Poppins, Inter, or SF Pro
+
+Soft shadows, rounded corners, subtle gradients
+
+Smooth scrolling and subtle hover animations
+
+Include optional Dark Mode toggle using JavaScript
+
+🛠️ Technical Requirements
+
+Fully built with:
+HTML5, CSS3 (Flexbox + Grid), JavaScript (ES6+)
+
+Fully responsive on phone, tablet, laptop, and ultrawide screens
+
+Use CSS variables for theme
+
+Use JS scroll animations (GSAP optional, but vanilla is okay)
+
+Accessibility: ARIA labels, alt text, good contrast
+
+Lazy loading images for performance
+
+Smooth transitions (fade, slide, zoom)
+
+⭐ Optional Features
+
+Animated intro text
+
+Floating navbar on scroll
+
+Video reel section
+
+Download resume button
+
+Favicon and logo with initials: YS
+
+Format
+
+Build as a Single Page Website with smooth scrolling navigation (anchor links).
