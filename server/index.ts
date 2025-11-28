@@ -74,6 +74,18 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 // doesn't interfere with the other routes
 if (process.env.NODE_ENV === "production") {
   serveStatic(app);
+
+  // For local testing, start the server
+  const port = parseInt(process.env.PORT || "5001", 10);
+  httpServer.listen(
+    {
+      port,
+      host: "localhost",
+    },
+    () => {
+      log(`serving on port ${port}`);
+    },
+  );
 } else {
   (async () => {
     const { setupVite } = await import("./vite");
