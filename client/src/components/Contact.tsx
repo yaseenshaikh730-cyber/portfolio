@@ -3,8 +3,50 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Github, Linkedin, Youtube, Instagram, Mail } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(result.message);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error(result.message || "Failed to send message");
+      }
+    } catch (error) {
+      toast.error("Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
   return (
     <section id="contact" className="py-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto px-6">
@@ -49,30 +91,69 @@ export default function Contact() {
             transition={{ delay: 0.2 }}
             className="bg-card p-8 rounded-3xl border border-border/50 shadow-xl"
           >
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium ml-1">Name</label>
-                  <Input id="name" placeholder="John Doe" className="bg-background/50 border-border/50 focus:bg-background" />
+                  <Input 
+                    id="name" 
+                    placeholder="John Doe" 
+                    className="bg-background/50 border-border/50 focus:bg-background"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    data-testid="input-name"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium ml-1">Email</label>
-                  <Input id="email" type="email" placeholder="john@example.com" className="bg-background/50 border-border/50 focus:bg-background" />
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="john@example.com" 
+                    className="bg-background/50 border-border/50 focus:bg-background"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    data-testid="input-email"
+                  />
                 </div>
               </div>
               
               <div className="space-y-2">
                 <label htmlFor="subject" className="text-sm font-medium ml-1">Subject</label>
-                <Input id="subject" placeholder="Project Inquiry" className="bg-background/50 border-border/50 focus:bg-background" />
+                <Input 
+                  id="subject" 
+                  placeholder="Project Inquiry" 
+                  className="bg-background/50 border-border/50 focus:bg-background"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  data-testid="input-subject"
+                />
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="message" className="text-sm font-medium ml-1">Message</label>
-                <Textarea id="message" placeholder="Tell me about your project..." className="min-h-[150px] bg-background/50 border-border/50 focus:bg-background resize-none" />
+                <Textarea 
+                  id="message" 
+                  placeholder="Tell me about your project..." 
+                  className="min-h-[150px] bg-background/50 border-border/50 focus:bg-background resize-none"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  data-testid="input-message"
+                />
               </div>
 
-              <Button type="submit" size="lg" className="w-full rounded-xl text-base">
-                Send Message
+              <Button 
+                type="submit" 
+                size="lg" 
+                className="w-full rounded-xl text-base"
+                disabled={isSubmitting}
+                data-testid="button-submit-contact"
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </motion.div>
